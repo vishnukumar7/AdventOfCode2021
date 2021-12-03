@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity() {
             requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
         }
         listItem=getValues()
+        val powerConsumption=PowerConsumption(listItem)
+        powerConsumption.partTwo()
     }
 
 
