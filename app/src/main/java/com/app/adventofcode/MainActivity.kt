@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("hydrothermal.txt")
-        val hydrothermalVenture=HydrothermalVenture(listItem)
+        listItem = getAssetsFile("Whales.txt")
+        val hydrothermalVenture=TreacheryWhales(listItem)
         hydrothermalVenture.init()
         hydrothermalVenture.partOne()
-
+        hydrothermalVenture.partTwo()
     }
 
     fun getAssetsFile(fileName: String): ArrayList<String> {
