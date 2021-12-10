@@ -1,28 +1,9 @@
 package com.app.adventofcode
 
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.Settings
-import android.text.method.ArrowKeyMovementMethod
-import android.text.method.ScrollingMovementMethod
-import android.util.DisplayMetrics
-import android.util.Log
-import android.view.View
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.util.*
-import java.util.jar.Manifest
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
-import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
     private val TAG="MainActivity1"
@@ -33,11 +14,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("Whales.txt")
-        val hydrothermalVenture=TreacheryWhales(listItem)
-        hydrothermalVenture.init()
+        listItem = getAssetsFile("SyntaxScoring.txt")
+        val hydrothermalVenture=SyntaxScoring(listItem)
+       // hydrothermalVenture.init()
         hydrothermalVenture.partOne()
-        hydrothermalVenture.partTwo()
+       // hydrothermalVenture.partTwo()
     }
 
     fun getAssetsFile(fileName: String): ArrayList<String> {
