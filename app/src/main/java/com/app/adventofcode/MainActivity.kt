@@ -14,11 +14,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("SyntaxScoring.txt")
-        val hydrothermalVenture=SyntaxScoring(listItem)
-       // hydrothermalVenture.init()
-        hydrothermalVenture.partOne()
-       // hydrothermalVenture.partTwo()
+        listItem = getAssetsFile("DumboOctopus.txt")
+        val hydrothermalVenture=DumboOctopus(listItem)
+       hydrothermalVenture.partTwo()
     }
 
     fun getAssetsFile(fileName: String): ArrayList<String> {
