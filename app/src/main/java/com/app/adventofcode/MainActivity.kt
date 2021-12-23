@@ -9,14 +9,15 @@ class MainActivity : AppCompatActivity() {
     private val TAG="MainActivity1"
     lateinit var listItem : ArrayList<String>
     lateinit var listItemBoard : ArrayList<String>
+    lateinit var listItemBreakLine: ArrayList<ArrayList<String>>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("DumboOctopus.txt")
-        val hydrothermalVenture=DumboOctopus(listItem)
-       hydrothermalVenture.partTwo()
+        listItem = getAssetsFile("TransparentOrigami.txt")
+       val origami=TransparentOrigami(listItemBreakLine)
+        origami.partOne()
     }
 
     fun getAssetsFile(fileName: String): ArrayList<String> {
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             bufferedReader= BufferedReader(InputStreamReader(assets.open(fileName)))
             var line:String?=null
             listItemBoard=ArrayList()
+            listItemBreakLine= ArrayList()
             var wordCount = 0
             var characterCount = 0
             var paraCount = 0
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             var sentenceCount = 0
             var count=0;
             var sentences=""
+            var itemList=ArrayList<String>()
             while (bufferedReader.readLine().also { line = it } != null) {
                 if (line.equals("")) {
                     paraCount += 1
@@ -40,6 +43,8 @@ class MainActivity : AppCompatActivity() {
                     if(sentences.isNotEmpty()){
                         listItemBoard.add(sentences)
                     }
+                    listItemBreakLine.add(itemList)
+                    itemList= ArrayList()
                     sentences=""
                 } else {
                     characterCount = characterCount.plus(line!!.length)
@@ -49,10 +54,13 @@ class MainActivity : AppCompatActivity() {
                     val sentence: List<String> = line!!.split("[!?.:]+")
                     sentenceCount += sentence.size
                     arrList.add(line!!)
+                    itemList.add(line!!)
                     sentences+=" "+line!!.trim()
                 }
 
             }
+            if(itemList.size>0)
+                listItemBreakLine.add(itemList)
             sentences.trim()
             if(sentences.isNotEmpty()){
                 listItemBoard.add(sentences)
