@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("TransparentOrigami.txt")
-       val origami=TransparentOrigami(listItemBreakLine)
+        listItem = getAssetsFile("ArithmeticLogicUnit.txt")
+         val origami=ArithmeticLogicUnit(listItem)
         origami.partOne()
     }
 
