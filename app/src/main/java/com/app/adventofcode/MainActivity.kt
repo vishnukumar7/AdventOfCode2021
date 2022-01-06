@@ -1,6 +1,7 @@
 package com.app.adventofcode
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,9 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("ArithmeticLogicUnit.txt")
-         val origami=ArithmeticLogicUnit(listItem)
-        origami.partOne()
+        listItem = getAssetsFile("Polymerization.txt")
+         val origami=Polymerization(listItemBreakLine)
+        Log.d(TAG, "onCreate: "+ origami.part2())
+
     }
 
     fun getAssetsFile(fileName: String): ArrayList<String> {

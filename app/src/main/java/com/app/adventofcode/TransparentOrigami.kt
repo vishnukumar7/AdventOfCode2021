@@ -1,137 +1,62 @@
 package com.app.adventofcode
 
 import android.util.Log
+import kotlin.math.abs
 
 class TransparentOrigami(private var listItem: ArrayList<ArrayList<String>>) {
-private val TAG="TransparentOrigami"
-    var gridItem: Array<CharArray> =Array(10) { CharArray(10)}
-    var rows=1
-    var columns=1
-    var dotVisible=0
-    var duplicateVisible=0
-    init {
-        val rowList=ArrayList<String>()
-        val colList= ArrayList<String>()
-        for (item in listItem[0]){
-    //        Log.d(TAG, ":init  $item")
-            val dataSplit=item.trim().split(",")
-            if(rows<dataSplit[1].toInt()){
-                rows=dataSplit[1].toInt()
-            }
-            if(columns<dataSplit[0].toInt()){
-                columns=dataSplit[0].toInt()
-            }
-            rowList.add(dataSplit[1])
-            colList.add(dataSplit[0])
-        }
-        rows++
-        columns++
-        Log.d(TAG, "init : $rows $columns")
-        gridItem= Array(rows){ CharArray(columns) }
-        for (x in 0 until rows){
-            for(y in 0 until columns){
-                gridItem[x][y]='.'
-            }
-        }
-        for (index in 0 until rowList.size){
-            gridItem[rowList[index].toInt()][colList[index].toInt()]='#'
-        }
+
+    private val TAG="TransparentOrigami"
+    private var page =listItem[0].map {
+        val c=it.split(",")
+        Coord(x= c[0].toInt(),y= c[1].toInt())
+    }
+    private val instructions =listItem[1].map {
+        Pair(it[it.indexOf("=") - 1], it.slice(it.indexOf("=") + 1 until it.length).toInt())
     }
 
-    fun partOne1(){
-        for(item in listItem[0]){
-            val itemValues=item.trim().split(",")
-            var flag=true
-            for(dataItem in listItem[0]){
-                val dataItemValues=dataItem.trim().split(",")
-                if(item!=dataItem){
-                    if(itemValues[0]==dataItemValues[1] && itemValues[1]==dataItemValues[0]){
-                        flag=false
-                        duplicateVisible++
-                        break
-                    }
-                }
-            }
-            if(flag)
-                dotVisible++
-        }
-        Log.d(TAG, "partOne: $dotVisible $duplicateVisible")
-        var count=dotVisible+(duplicateVisible/2)
-        Log.d(TAG, "partOne: count $count")
+    fun partOne(): Int {
+        page= page.foldBy(instructions[0].first,instructions[0].second) as ArrayList<Coord>
+       return page.size
     }
 
+    fun partTwo(){
+        instructions.forEach {
+            page=page.foldBy(it.first,it.second) as ArrayList<Coord>
+        }
+        Log.d(TAG, "partTwo: ")
+        page.print()
+    }
 
+    fun List<Coord>.print() {
+        println()
+        val width = maxOf { it.x }
+        val height = maxOf { it.y }
 
-    fun partOne(){
-     //   printArray()
-        for(item in listItem[1]){
-            val data=item.trim().split(" ")
-            val values=data[data.size-1].trim().split("=")
-            if(values[0].trim()=="y"){
-                horizontalFold(values[1].toInt())
-                break
-            }else if(values[0].trim()=="x"){
-                verticalFold(values[1].toInt())
-                break
-            }
-            printArray()
+        val p = Array(size = height + 1) {
+            Array(size = width + 1) { '.' }
         }
 
-      /*  var dotCount=0
-        for(x in 0 until rows){
-            for (y in 0 until columns){
-                if(gridItem[x][y]=='.')
-                    dotCount++
-            }
-        }*/
-        Log.d(TAG, "partOne: count : $dotVisible")
-    }
-    private fun printArray(){
-        Log.d(TAG, "printArray: ")
-        for(x in 0 until rows){
-            for (y in 0 until columns){
-                print("${gridItem[x][y]} ")
+        forEach { p[it.y][it.x] = '#' }
+
+        p.forEach { x ->
+            x.forEach {
+                print(it)
             }
             println()
         }
+        println()
     }
 
-    private fun horizontalFold(index: Int){
-        var newGridItem=Array(index){ CharArray(columns)}
-        for(x in 0 until index){
-            for (y in 0 until columns){
-                if (gridItem[rows-1-x][y] != gridItem[x][y]) {
-                    dotVisible++
-                }
+    fun List<Coord>.foldBy(axis: Char, foldLine: Int): List<Coord> {
+        val flippers =
+            if (axis == 'x') filter { it.x > foldLine }
+            else filter { it.y > foldLine }
 
-                if (gridItem[rows-1-x][y]=='#' || gridItem[x][y]=='#'){
-                    newGridItem[x][y]='#'
-                }else{
-                    newGridItem[x][y]='.'
-                }
-            }
+        flippers.forEach {
+            if (axis == 'x') it.x = abs(it.x - (foldLine * 2))
+            else it.y = abs(it.y - (foldLine * 2))
         }
-        gridItem=newGridItem
-        rows=index
+
+        return this.distinct()
     }
-
-    private fun verticalFold(index: Int){
-        val newGridItem=Array(rows){ CharArray(index)}
-        for(x in 0 until rows){
-            for (y in 0 until index){
-                if (gridItem[x][columns-1-y] != gridItem[x][y]) dotVisible++
-
-                if (gridItem[x][columns-1-y]=='#' || gridItem[x][y]=='#'){
-                    newGridItem[x][y]='#'
-
-                }else{
-                    newGridItem[x][y]='.'
-                }
-            }
-        }
-        gridItem=newGridItem
-        columns=index
-    }
-
-
 }
