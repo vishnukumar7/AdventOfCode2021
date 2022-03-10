@@ -16,9 +16,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listItem = getAssetsFile("Polymerization.txt")
-         val origami=Polymerization(listItemBreakLine)
-        Log.d(TAG, "onCreate: "+ origami.part2())
+        listItem = getAssetsFile("ReactorReboot.txt")
+        val origami=ReactorReboot(listItem)
+        Log.d(TAG, "onCreate: "+ origami.partOne())
 
     }
 
